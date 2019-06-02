@@ -82,6 +82,9 @@ function nextPlayer() {
 /****** NEW BUTTON FUNCTION ******/
 document.querySelector(".btn-new").addEventListener("click", init);
 
+/****** COLLAPSE BUTTON FUNCTION 
+var collps = document.getElementsByClassName()******/
+
 function init() {
   globalScore = [0, 0];
   roundScore = 0;
