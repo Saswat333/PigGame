@@ -1,7 +1,10 @@
 GAME RULES:
 
-- The game has 2 players, playing in rounds
-- In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score
-- BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn
-- The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
-- The first player to reach 100 points on GLOBAL score wins the game
+- The game has 2 players, playing in rounds.
+- There will be two dices.
+- In each turn, a player rolls two dices as many times as he whishes. Each result get added to his CURRENT ROUND  score. 
+- BUT, if the player rolls a double 1, all his CURRENT ROUND  score gets lost. After that, it's the next player's turn.
+- Similarly, if the player rolls a double 6, all his OVERALL score gets lost. After that, it's the next player's turn
+- The player can choose to 'Hold', which means that his CURRENT ROUND score gets added to his OVERALL score. After that, it's the next player's turn
+- The players can set a FINAL SCORE as WINNING score before starting the game. The first player to reach the WINNING score will be declared as WINNER OF THE GAME.
+- But, if you don't put the WINNING SCORE before starting the game then, the winning score will be set to 100 by default.
