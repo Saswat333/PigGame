@@ -46,10 +46,12 @@
                <div class="card card-body">
                     <ul>
                             <li>The game has 2 players, playing in rounds</li>
-                            <li >In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score.</li>
-                            <li>BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn.</li>
-                            <li>The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn.</li>
-                            <li>The first player to reach 100 points on GLOBAL score wins the game.</li>
+                            <li >In each turn, a player rolls a dice as many times as he whishes. Each result get added to his CURRENT ROUND score.</li>
+                            <li>BUT, if the player rolls a 1, all his CURRENT ROUND score gets lost. After that, it's the next player's turn.</li>
+                            <li>The player can choose to 'Hold', which means that his CURRENT ROUND score gets added to his OVERALL SCORE. After that, it's the next player's turn.</li>
+                            <li>If any player gets two consecutive 6, then the OVERALL SCORE will be reset to 0.</li>
+                            <li>The first player to reach 100 points on OVERALL SCORE wins the game.</li>
+                            <li>If the player doesnt enter valid final score i.e. any negative value then the OVERALL SCORE will be set to 100 by default.</li>
                           </ul>
                </div>
            </div>
@@ -57,7 +59,7 @@
             <button class="btn-new"><i class="ion-ios-plus-outline"></i>New game</button>
             <button class="btn-roll"><i class="ion-ios-loop"></i>Roll dice</button>
             <button class="btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
-
+            <input type="number" min='0' placeholder="Final score" class="final-score">
             <!-- Dice image -->
             <img src="dice-5.png" alt="Dice" class="dice">
         </div>

@@ -7,10 +7,12 @@ GAME RULES:
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
 - The first player to reach 100 points on GLOBAL score wins the game
 */
-var globalScore, roundScore, activePlayer, gamePlaying;
+
+var globalScore, roundScore, activePlayer, gamePlaying, lastDice, winningScore;
 
 //intialise all the above parameter values
 init();
+var inputScore = document.querySelector(".final-score").value;
 
 /****** ROLL BUTTON FUNCTION ******/
 document.querySelector(".btn-roll").addEventListener("click", function() {
@@ -24,7 +26,12 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
     diceDOM.src = "dice-" + diceValue + ".png";
 
     //3.Update the score of local and global IF rolled value not 1
-    if (diceValue !== 1) {
+    if (diceValue === 6 && lastDice === 6) {
+      //player loses gobalscore
+
+      document.querySelector("#score-" + activePlayer).textContent = "0";
+      nextPlayer();
+    } else if (diceValue !== 1) {
       roundScore += diceValue;
       document.querySelector(
         "#current-" + activePlayer
@@ -33,19 +40,21 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
       //next player
       nextPlayer();
     }
+    lastDice = diceValue;
   }
 });
 
 /****** HOLD BUTTON FUNCTION ******/
 document.querySelector(".btn-hold").addEventListener("click", function() {
   if (gamePlaying) {
+    checkFinalScore();
     //ADD  current score to global score
     globalScore[activePlayer] += roundScore;
     //update in UI
     document.querySelector("#score-" + activePlayer).textContent =
       globalScore[activePlayer];
     //check if player won
-    if (globalScore[activePlayer] >= 50) {
+    if (globalScore[activePlayer] >= winningScore) {
       document.getElementById("name-" + activePlayer).textContent =
         "WINNER !!!";
       document.querySelector(".dice").style.display = "none"; //if any player wins remove the dice
@@ -70,7 +79,7 @@ function nextPlayer() {
 
   //update currentscore as 0, when hit 1
   document.getElementById("current-0").textContent = 0;
-  document.getElementById("current-0").textContent = 0;
+  document.getElementById("current-1").textContent = 0;
 
   //move the active panel to other player:: here toggle can change the class, remove from one place and add in another
   document.querySelector(".player-0-panel").classList.toggle("active");
@@ -91,6 +100,7 @@ function init() {
   activePlayer = 0; // player1 = 0   player2 = 1
   gamePlaying = true;
 
+  document.querySelector(".final-score").value = "";
   //hiding the dice block at the start of game
   document.querySelector(".dice").style.display = "none";
 
@@ -109,4 +119,13 @@ function init() {
   document.querySelector(".player-0-panel").classList.remove("active");
   document.querySelector(".player-1-panel").classList.remove("active");
   document.querySelector(".player-0-panel").classList.add("active");
+}
+
+function checkFinalScore() {
+  //Undefined, null, 0, "", negative value are all COERED to false, anyother value coered to true
+  if (inputScore > 0) {
+    winningScore = inputScore;
+  } else {
+    winningScore = 30;
+  }
 }
