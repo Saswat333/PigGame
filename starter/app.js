@@ -8,57 +8,67 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 */
 
-var globalScore, roundScore, activePlayer, gamePlaying, lastDice, winningScore;
+var globalScore,
+  roundScore,
+  activePlayer,
+  gamePlaying,
+  winningScore,
+  inputScore;
 
 //intialise all the above parameter values
 init();
-var inputScore = document.querySelector(".final-score").value;
 
 /****** ROLL BUTTON FUNCTION ******/
 document.querySelector(".btn-roll").addEventListener("click", function() {
   if (gamePlaying) {
     //1. generate random number
-    var diceValue = Math.floor(Math.random() * 6) + 1;
-
+    var diceValue1 = Math.floor(Math.random() * 6) + 1;
+    var diceValue2 = Math.floor(Math.random() * 6) + 1;
+    console.log(diceValue1);
+    console.log(diceValue2);
     //2. Display the disk block and result in DICE image
-    var diceDOM = document.querySelector(".dice");
-    diceDOM.style.display = "block";
-    diceDOM.src = "dice-" + diceValue + ".png";
+    document.getElementById("dice-1").style.display = "block";
+    document.getElementById("dice-2").style.display = "block";
 
-    //3.Update the score of local and global IF rolled value not 1
-    if (diceValue === 6 && lastDice === 6) {
+    document.getElementById("dice-1").src = "dice-" + diceValue1 + ".png";
+    document.getElementById("dice-2").src = "dice-" + diceValue2 + ".png";
+
+    //3.Update the score of local and global IF rolled value not 1 & if value is 1 the localScore = 0
+
+    if (diceValue1 === 6 && diceValue2 === 6) {
       //player loses gobalscore
-
       document.querySelector("#score-" + activePlayer).textContent = "0";
       nextPlayer();
-    } else if (diceValue !== 1) {
-      roundScore += diceValue;
+    } else if (diceValue1 === 1 && diceValue2 === 1) {
+      nextPlayer();
+    } else {
+      roundScore += diceValue1 + diceValue2;
       document.querySelector(
         "#current-" + activePlayer
       ).textContent = roundScore;
-    } else {
-      //next player
-      nextPlayer();
     }
-    lastDice = diceValue;
+
+    //4. reset the score if
   }
 });
 
 /****** HOLD BUTTON FUNCTION ******/
 document.querySelector(".btn-hold").addEventListener("click", function() {
   if (gamePlaying) {
-    checkFinalScore();
     //ADD  current score to global score
     globalScore[activePlayer] += roundScore;
     //update in UI
     document.querySelector("#score-" + activePlayer).textContent =
       globalScore[activePlayer];
+    //checking for WINNING SCORE
+    inputScore = document.querySelector(".final-score").value;
+    checkFinalScore();
     //check if player won
     if (globalScore[activePlayer] >= winningScore) {
       document.getElementById("name-" + activePlayer).textContent =
         "WINNER !!!";
-      document.querySelector(".dice").style.display = "none"; //if any player wins remove the dice
-      //utilising winner css class
+      document.getElementById("dice-1").style.display = "none"; //if any player wins remove the dice
+      document.getElementById("dice-2").style.display = "none";
       document
         .querySelector(".player-" + activePlayer + "-panel")
         .classList.add("winner");
@@ -85,7 +95,8 @@ function nextPlayer() {
   document.querySelector(".player-0-panel").classList.toggle("active");
   document.querySelector(".player-1-panel").classList.toggle("active");
   //hide the dice when player switch
-  document.querySelector(".dice").style.display = "none";
+  document.getElementById("dice-1").style.display = "none";
+  document.getElementById("dice-2").style.display = "none";
 }
 
 /****** NEW BUTTON FUNCTION ******/
@@ -102,7 +113,8 @@ function init() {
 
   document.querySelector(".final-score").value = "";
   //hiding the dice block at the start of game
-  document.querySelector(".dice").style.display = "none";
+  document.getElementById("dice-1").style.display = "none";
+  document.getElementById("dice-2").style.display = "none";
 
   //intialising all the global and current score of the players
   document.getElementById("score-0").textContent = 0;
@@ -126,6 +138,6 @@ function checkFinalScore() {
   if (inputScore > 0) {
     winningScore = inputScore;
   } else {
-    winningScore = 30;
+    winningScore = 60;
   }
 }
