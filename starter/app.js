@@ -37,6 +37,7 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
 
     if (diceValue1 === 6 && diceValue2 === 6) {
       //player loses gobalscore
+      globalScore[activePlayer] = 0;
       document.querySelector("#score-" + activePlayer).textContent = "0";
       nextPlayer();
     } else if (diceValue1 === 1 && diceValue2 === 1) {
